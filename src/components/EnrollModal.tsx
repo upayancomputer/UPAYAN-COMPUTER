@@ -167,19 +167,28 @@ export const EnrollModal: React.FC<EnrollModalProps> = ({
                     </div>
 
                     {/* Course Selection */}
-                    <div className="space-y-1.5">
+                    <div className="space-y-1.5 font-sans">
                       <label className="text-sm font-medium text-slate-300">Select Learning Program <span className="text-rose-500">*</span></label>
                       <select
                         value={courseId}
                         onChange={(e) => setCourseId(e.target.value)}
-                        className="w-full h-11 px-4 rounded-xl bg-slate-900 border border-white/10 text-slate-100 text-sm focus:border-blue-500 focus:outline-none"
+                        className="w-full h-11 px-4 rounded-xl bg-slate-900 border border-white/10 text-slate-100 text-sm focus:border-blue-500 focus:outline-none cursor-pointer"
                         id="enroll-course-select"
                       >
-                        {courses.map((course) => (
-                          <option key={course.id} value={course.id} className="bg-slate-950">
-                            {course.shortTitle} ({course.duration})
-                          </option>
-                        ))}
+                        {Array.isArray(courses) && courses.map((course, idx) => {
+                          if (!course) return null;
+                          let displayName = `${course.shortTitle} (${course.duration})`;
+                          if (course.id === 'office-app') displayName = 'Computer Office Application Course (3/6 Months)';
+                          else if (course.id === 'adv-tech') displayName = 'Advanced Computer Technology Course (6 Months)';
+                          else if (course.id === 'diploma-ict') displayName = 'Diploma in Information & Communication Technology (ICT) (1 Year)';
+                          else if (course.id === 'hsc-ict') displayName = 'HSC ICT Academic Program';
+                          
+                          return (
+                            <option key={course.id || idx} value={course.id} className="bg-slate-950">
+                              {displayName}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>

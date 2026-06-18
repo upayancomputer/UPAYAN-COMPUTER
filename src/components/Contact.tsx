@@ -22,7 +22,7 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
 
     setStatus('submitting');
     
-    const matchedCourse = courses.find(c => c.title === selectedCourse);
+    const matchedCourse = Array.isArray(courses) ? courses.find(c => c && c.title === selectedCourse) : undefined;
     const courseFee = matchedCourse ? matchedCourse.price : 'Not Specified';
 
     try {
@@ -227,20 +227,29 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
                       </div>
 
                       {/* Course select */}
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 font-sans">
                         <label className="text-xs font-bold uppercase tracking-wider font-mono text-slate-400">Course Interested In</label>
                         <select
                           value={selectedCourse}
                           onChange={(e) => setSelectedCourse(e.target.value)}
-                          className="w-full h-11 px-4 rounded-xl bg-slate-900 border border-white/10 text-slate-100 text-sm focus:border-blue-500 focus:outline-none"
+                          className="w-full h-11 px-4 rounded-xl bg-slate-900 border border-white/10 text-slate-100 text-sm focus:border-blue-500 focus:outline-none cursor-pointer"
                           id="contact-form-course-select"
                         >
                           <option value="">-- Choose Core Program --</option>
-                          {courses.map(c => (
-                            <option key={c.id} value={c.title} className="bg-slate-950">
-                              {c.shortTitle}
-                            </option>
-                          ))}
+                          {Array.isArray(courses) && courses.map((c, idx) => {
+                            if (!c) return null;
+                            let displayName = c.shortTitle;
+                            if (c.id === 'office-app') displayName = 'Computer Office Application Course (3/6 Months)';
+                            else if (c.id === 'adv-tech') displayName = 'Advanced Computer Technology Course (6 Months)';
+                            else if (c.id === 'diploma-ict') displayName = 'Diploma in Information & Communication Technology (ICT) (1 Year)';
+                            else if (c.id === 'hsc-ict') displayName = 'HSC ICT Academic Program';
+                            
+                            return (
+                              <option key={c.id || idx} value={c.title || ''} className="bg-slate-950 text-white">
+                                {displayName}
+                              </option>
+                            );
+                          })}
                         </select>
                       </div>
                     </div>
