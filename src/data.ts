@@ -38,7 +38,7 @@ export const COURSES: Course[] = [
       'Design high-impact slides to present sales, findings, or business plans.',
       'Fluently use email, search engines, and cloud tools for remote productivity.'
     ],
-    price: '৳ 3,500 (3 Months) / ৳ 5,500 (6 Months)',
+    price: '৳ 3,500 (3 Months) / ৳ 5,000 (6 Months)',
     installments: 'Available in 2 monthly installments'
   },
   {
@@ -77,8 +77,8 @@ export const COURSES: Course[] = [
       'Configure a local client-router-switch environment securely with IP configurations.',
       'Create logos, Facebook banners, promotional material, and vector illustrations.'
     ],
-    price: '৳ 8,000 Complete Course',
-    installments: 'Pay in 3 easy monthly installments of ৳2,700'
+    price: '৳ 6,000',
+    installments: 'Pay in 2 easy monthly installments'
   },
   {
     id: 'diploma-ict',
@@ -116,8 +116,8 @@ export const COURSES: Course[] = [
       'Write procedural Python programs to parse data and automate system workloads.',
       'Demonstrate deep professional expertise across modern hardware, networks, and suites.'
     ],
-    price: '৳ 15,000 Full Year',
-    installments: '৳ 3,000 Admission Fee followed by 4 easy installments of ৳ 3,000'
+    price: '৳ 20,000',
+    installments: '৳ 4,000 Admission Fee followed by 4 monthly installments of ৳ 4,000'
   },
   {
     id: 'hsc-ict',
@@ -155,7 +155,7 @@ export const COURSES: Course[] = [
       'Write, test, and debug fully working logical console applications in C programming.',
       'Explain communication paradigms and structure custom HTML pages seamlessly.'
     ],
-    price: '৳ 2,500 Academic Package',
+    price: '৳ 6,000',
     installments: 'One-time payment'
   }
 ];

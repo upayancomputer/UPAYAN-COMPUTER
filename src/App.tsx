@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Courses } from './components/Courses';
 import { WhyChooseUs } from './components/WhyChooseUs';
+import { Founder } from './components/Founder';
 import { Stats } from './components/Stats';
 import { Testimonials } from './components/Testimonials';
 import { Gallery } from './components/Gallery';
@@ -63,6 +64,9 @@ export default function App() {
 
       {/* Interactive Course Curriculum cards */}
       <Courses courses={COURSES} onEnrollClick={handleEnrollBtnClick} />
+
+      {/* Our Founder Profile Section */}
+      <Founder />
 
       {/* Bento Standard Benefits & Labs */}
       <WhyChooseUs features={FEATURES} />
