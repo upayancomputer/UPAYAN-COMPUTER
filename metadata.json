@@ -1,0 +1,6 @@
+{
+  "name": "Upayan Computer Training Center",
+  "description": "Premium glassmorphic website for UPAYAN Computer Training Center, designed with interactive courses, animated counters, success stories, and an admissions portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
