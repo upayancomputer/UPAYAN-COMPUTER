@@ -23,7 +23,7 @@ export const EnrollModal: React.FC<EnrollModalProps> = ({
   const [shift, setShift] = useState('morning');
   const [notes, setNotes] = useState('');
   
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   useEffect(() => {
     if (selectedCourseId) {
@@ -31,16 +31,42 @@ export const EnrollModal: React.FC<EnrollModalProps> = ({
     }
   }, [selectedCourseId]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) return;
 
     setStatus('submitting');
     
-    // Simulate premium secure database transaction
-    setTimeout(() => {
-      setStatus('success');
-    }, 1800);
+    const activeCourse = courses.find(c => c.id === courseId);
+
+    try {
+      const response = await fetch('https://formspree.io/f/mwvjdnqw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          'Student Name': name,
+          'Mobile Number': `+880 ${phone}`,
+          'Email': email || 'Not Provided',
+          'Selected Course': activeCourse?.title || 'Unknown Course',
+          'Course Fee': activeCourse?.price || 'Not Specified',
+          'Preferred Batch': shift,
+          'Message / Requirements': notes || 'None',
+          'Submission Date & Time': new Date().toLocaleString()
+        })
+      });
+
+      if (response.ok) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      console.error('Submission error:', err);
+      setStatus('error');
+    }
   };
 
   const activeCourse = courses.find(c => c.id === courseId);
@@ -275,12 +301,14 @@ export const EnrollModal: React.FC<EnrollModalProps> = ({
                     <Check size={32} />
                   </div>
                   
-                  <h4 className="text-2xl font-bold font-display text-white">Seat Blocked Successfully!</h4>
-                  <p className="text-slate-300 max-w-md mx-auto mt-2.5 text-sm leading-relaxed">
+                  <h4 className="text-xl sm:text-2xl font-bold font-display text-white px-4 leading-tight">
+                    ✅ Your Admission Request Has Been Submitted Successfully. We Will Contact You Soon.
+                  </h4>
+                  <p className="text-slate-350 max-w-md mx-auto mt-4 text-sm leading-relaxed">
                     Assalamu Alaikum, <strong className="text-white">{name}</strong>. Your provisional admission for the <strong className="text-blue-400">{activeCourse?.title}</strong> ({shift} shift) has been successfully recorded.
                   </p>
 
-                  <div className="mt-8 p-5 rounded-2xl bg-slate-900/50 border border-white/5 w-full max-w-sm space-y-3.5 text-left text-xs text-slate-400">
+                  <div className="mt-8 p-5 rounded-2xl bg-slate-900/50 border border-white/5 w-full max-w-sm space-y-3.5 text-left text-xs text-slate-400 mx-auto">
                     <div className="flex items-center gap-3">
                       <Phone size={14} className="text-blue-400" />
                       <div>
@@ -321,6 +349,35 @@ export const EnrollModal: React.FC<EnrollModalProps> = ({
                     id="success-ok-btn"
                   >
                     RETURN TO HOMEPAGE
+                  </button>
+                </motion.div>
+              )}
+
+              {status === 'error' && (
+                <motion.div
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="flex flex-col items-center justify-center py-12 text-center"
+                >
+                  <div className="h-16 w-16 mb-6 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center shadow-xl">
+                    <X size={32} />
+                  </div>
+                  
+                  <h4 className="text-xl font-bold font-display text-rose-450 leading-tight">
+                    ❌ Submission Failed. Please Try Again.
+                  </h4>
+                  <p className="text-xs text-slate-400 max-w-sm mx-auto mt-4 leading-relaxed">
+                    There was an error communicating with the admission registration endpoint. Please check your network connection and try again.
+                  </p>
+
+                  <button
+                    onClick={() => {
+                      setStatus('idle');
+                    }}
+                    className="mt-8 px-6 py-2.5 text-xs font-bold font-mono text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-all cursor-pointer"
+                    id="modal-error-retry-btn"
+                  >
+                    RETRY SUBMISSION
                   </button>
                 </motion.div>
               )}

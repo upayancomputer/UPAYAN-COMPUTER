@@ -37,7 +37,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavClick, onEnrollClick }) => 
               </div>
             </button>
             <p className="text-xs text-slate-400 leading-relaxed font-sans">
-              UPAYAN COMPUTER TRAINING CENTER is an established, registered IT learning institute standardizing practical computer knowledge across Gazipur, Bangladesh. We bridge students to careers.
+              UPAYAN COMPUTER TRAINING CENTER is an established, registered IT learning institute standardizing practical computer knowledge across Jamalpur, Bangladesh. We bridge students to careers.
             </p>
             {/* Accreditation Badge */}
             <div className="pt-2">
@@ -101,15 +101,26 @@ export const Footer: React.FC<FooterProps> = ({ onNavClick, onEnrollClick }) => 
             <ul className="space-y-3 text-xs text-slate-400" id="footer-contact-details">
               <li className="flex items-start gap-2.5">
                 <MapPin size={15} className="text-blue-500 shrink-0 mt-0.5" />
-                <span>Board Bazaar, (Opposite Central Mosque), Gazipur, Bangladesh</span>
+                <a 
+                  href="https://www.google.com/maps/search/?api=1&query=Nandina+College+Gate+Nandina+Jamalpur+Sadar+Jamalpur"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-blue-400 transition-colors"
+                >
+                  Nandina College Gate, Nandina, Jamalpur Sadar, Jamalpur
+                </a>
               </li>
               <li className="flex items-center gap-2.5 font-mono">
                 <Phone size={15} className="text-blue-500 shrink-0" />
-                <span>+880 1712-345678</span>
+                <a href="tel:+8801645773950" className="hover:text-blue-400 transition-colors">
+                  +8801645773950
+                </a>
               </li>
               <li className="flex items-center gap-2.5 font-mono">
                 <Mail size={15} className="text-blue-500 shrink-0" />
-                <span>upayan.site@gmail.com</span>
+                <a href="mailto:upayan.site@gmail.com" className="hover:text-blue-400 transition-colors">
+                  upayan.site@gmail.com
+                </a>
               </li>
             </ul>
           </div>
@@ -117,14 +128,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavClick, onEnrollClick }) => 
         </div>
 
         {/* Bottom copyright segment */}
-        <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="mt-12 pt-8 border-t border-t-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p className="font-mono">
             &copy; {currentYear} UPAYAN Computer Training Center. All Tech Rights Reserved.
           </p>
           <div className="flex gap-4">
             <span className="hover:text-slate-300 transition-colors font-mono uppercase text-[10px]">Bangladesh Board syllabus v2026</span>
             <span className="h-4 w-[1px] bg-slate-800" />
-            <span className="hover:text-slate-300 transition-colors font-mono uppercase text-[10px]">Registered under Gazipur Registrar</span>
+            <span className="hover:text-slate-300 transition-colors font-mono uppercase text-[10px]">Registered under Jamalpur Registrar</span>
           </div>
         </div>
       </div>

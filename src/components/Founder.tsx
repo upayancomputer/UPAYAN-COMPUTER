@@ -8,7 +8,7 @@ export const Founder: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
 
-  const founderEmail = 'upayanitinstitute@gmail.com';
+  const founderEmail = 'upayan.site@gmail.com';
 
   const handleCopyEmail = async () => {
     try {

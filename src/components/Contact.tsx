@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MapPin, Phone, Mail, Clock, Send, Check, Loader2 } from './Icons';
+import { MapPin, Phone, Mail, Clock, Send, Check, Loader2, X } from './Icons';
 import { Course } from '../types';
 
 interface ContactProps {
@@ -14,16 +14,45 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
   const [selectedCourse, setSelectedCourse] = useState('');
   const [message, setMessage] = useState('');
   
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
-  const handleInquirySubmit = (e: React.FormEvent) => {
+  const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) return;
 
     setStatus('submitting');
-    setTimeout(() => {
-      setStatus('success');
-    }, 1500);
+    
+    const matchedCourse = courses.find(c => c.title === selectedCourse);
+    const courseFee = matchedCourse ? matchedCourse.price : 'Not Specified';
+
+    try {
+      const response = await fetch('https://formspree.io/f/mwvjdnqw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          'Student Name': name,
+          'Mobile Number': phone,
+          'Email': email || 'Not Provided',
+          'Selected Course': selectedCourse || 'General Academic Inquiry',
+          'Course Fee': courseFee,
+          'Preferred Batch': 'Not Specified (Contact Inquiry)',
+          'Message / Requirements': message || 'None',
+          'Submission Date & Time': new Date().toLocaleString()
+        })
+      });
+
+      if (response.ok) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      console.error('Submission error:', err);
+      setStatus('error');
+    }
   };
 
   return (
@@ -54,24 +83,37 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
             <div className="space-y-4">
               <h3 className="text-xl font-bold font-display text-white">Campus Location desk</h3>
               <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-sans">
-                Located inside Gazipur (near Dhaka), the UPAYAN Head Offices are highly accessible by public transport and provide an incredibly peaceful atmosphere for tech learning.
+                Located at Nandina College Gate (in Jamalpur), the UPAYAN Head Offices are highly accessible by public transport and provide an incredibly peaceful atmosphere for tech learning.
               </p>
             </div>
 
             {/* Practical Contact Info Blocks */}
             <div className="space-y-5" id="contact-details-box">
               {/* Address */}
-              <div className="flex gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 shadow-md">
-                <div className="h-10 w-10 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query=Nandina+College+Gate+Nandina+Jamalpur+Sadar+Jamalpur"
+                target="_blank"
+                rel="noreferrer"
+                className="flex gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all shadow-md group block"
+              >
+                <div className="h-10 w-10 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 group-hover:text-blue-300 flex items-center justify-center shrink-0">
                   <MapPin size={20} />
                 </div>
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider font-mono text-slate-400">Head Office Address</h4>
-                  <p className="text-xs sm:text-sm text-slate-200 mt-1 leading-relaxed">
-                    UPAYAN Computer Complex, 2nd Floor, Board Bazaar (Opposite Mosque), NH-12, Gazipur, Bangladesh
+                  <p className="text-xs sm:text-sm text-slate-200 group-hover:text-white mt-1 leading-relaxed">
+                    Nandina College Gate, Nandina, Jamalpur Sadar, Jamalpur, Bangladesh
+                    <span className="text-[10px] font-mono tracking-wider font-bold text-blue-400 inline-flex items-center gap-1 ml-2 bg-blue-500/10 px-1.5 py-0.5 rounded">
+                      <span>MAPS</span>
+                      <svg className="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                      </svg>
+                    </span>
                   </p>
                 </div>
-              </div>
+              </a>
 
               {/* Phone Hotlines */}
               <div className="flex gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 shadow-md">
@@ -80,12 +122,18 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
                 </div>
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider font-mono text-slate-400">Direct Academic Hotlines</h4>
-                  <p className="text-xs sm:text-sm text-slate-200 mt-1 font-mono hover:text-blue-400 transition-colors">
-                    +880 1712-345678 (Admission Guide)
-                  </p>
-                  <p className="text-[11px] sm:text-xs text-slate-200 mt-0.5 font-mono hover:text-blue-400 transition-colors">
-                    +880 1987-654321 (Lab Co-ordinator)
-                  </p>
+                  <a 
+                    href="tel:+8801645773950"
+                    className="block text-xs sm:text-sm text-slate-200 mt-1 font-mono hover:text-blue-400 transition-colors"
+                  >
+                    +8801645773950 (Admission Guide)
+                  </a>
+                  <a 
+                    href="tel:+8801577416188"
+                    className="block text-[11px] sm:text-xs text-slate-200 mt-1 font-mono hover:text-blue-400 transition-colors"
+                  >
+                    +8801577416188 (Alternative Hotline)
+                  </a>
                 </div>
               </div>
 
@@ -96,9 +144,12 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
                 </div>
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider font-mono text-slate-400">Official Registrar Electronic Desk</h4>
-                  <p className="text-xs sm:text-sm text-slate-200 mt-1 font-mono hover:text-cyan-450 transition-colors">
+                  <a 
+                    href="mailto:upayan.site@gmail.com"
+                    className="block text-xs sm:text-sm text-slate-200 mt-1 font-mono hover:text-cyan-400 transition-colors"
+                  >
                     upayan.site@gmail.com
-                  </p>
+                  </a>
                 </div>
               </div>
 
@@ -244,12 +295,14 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
                       <Check size={26} />
                     </div>
                     
-                    <h4 className="text-xl font-bold font-display text-white">Inquiry Sent Successfully!</h4>
-                    <p className="text-xs sm:text-sm text-slate-300 max-w-sm mx-auto mt-2 leading-relaxed">
+                    <h4 className="text-lg sm:text-xl font-bold font-display text-white px-4 leading-tight">
+                      ✅ Your Admission Request Has Been Submitted Successfully. We Will Contact You Soon.
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-350 max-w-sm mx-auto mt-4 leading-relaxed">
                       Thank you, <strong className="text-white">{name}</strong>. Your message regarding <strong className="text-blue-400">{selectedCourse || 'General Academic Inquiries'}</strong> has been registered.
                     </p>
                     <p className="text-[11px] text-slate-500 max-w-xs mt-6 leading-relaxed">
-                      Our board moderator will check your mobile number <strong>({phone})</strong> and email details to arrange a callbacks or SMS confirmation.
+                      Our board moderator will check your mobile number <strong>({phone})</strong> and email details to arrange a callback or SMS confirmation.
                     </p>
 
                     <button
@@ -265,6 +318,36 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
                       id="form-success-reset-btn"
                     >
                       SEND ANOTHER INQUIRY
+                    </button>
+                  </motion.div>
+                )}
+
+                {status === 'error' && (
+                  <motion.div
+                    key="error"
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="flex flex-col items-center justify-center py-12 text-center"
+                  >
+                    <div className="h-14 w-14 mb-5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center shadow-lg">
+                      <X size={26} />
+                    </div>
+                    
+                    <h4 className="text-lg font-bold font-display text-rose-400 leading-tight">
+                      ❌ Submission Failed. Please Try Again.
+                    </h4>
+                    <p className="text-xs text-slate-400 max-w-sm mx-auto mt-4 leading-relaxed">
+                      There was an error communicating with the admission registration endpoint. Please check your network connection and try again.
+                    </p>
+
+                    <button
+                      onClick={() => {
+                        setStatus('idle');
+                      }}
+                      className="mt-8 px-6 py-2.5 text-xs font-bold font-mono text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-all cursor-pointer"
+                      id="form-error-retry-btn"
+                    >
+                      RETRY SUBMISSION
                     </button>
                   </motion.div>
                 )}
