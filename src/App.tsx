@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Courses } from './components/Courses';
@@ -10,12 +10,29 @@ import { Gallery } from './components/Gallery';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { EnrollModal } from './components/EnrollModal';
+import { Admission } from './components/Admission';
 
 import { COURSES, FEATURES, STATS, TESTIMONIALS, GALLERY } from './data';
 
 export default function App() {
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [preselectedCourseId, setPreselectedCourseId] = useState('office-app');
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+  // Sync state on browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateTo = (path: string) => {
+    window.history.pushState(null, '', path);
+    setCurrentPath(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleEnrollBtnClick = (courseId?: string) => {
     if (courseId) {
@@ -27,6 +44,25 @@ export default function App() {
   };
 
   const handleNavClick = (id: string) => {
+    if (currentPath !== '/') {
+      navigateTo('/');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          const offset = 80;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 150);
+      return;
+    }
+
     const element = document.getElementById(id);
     if (element) {
       const offset = 80; // height of navbar
@@ -51,34 +87,44 @@ export default function App() {
       <div className="absolute bottom-[20%] right-[-5%] w-[40%] h-[40%] bg-indigo-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
 
       {/* Main Sticky Glassmorphism Header */}
-      <Navbar onEnrollClick={handleEnrollBtnClick} />
-
-      {/* Hero Visual Area with Animated Gradients */}
-      <Hero 
-        onExploreClick={() => handleNavClick('courses')} 
-        onContactClick={() => handleNavClick('contact')} 
+      <Navbar 
+        onEnrollClick={handleEnrollBtnClick} 
+        currentPath={currentPath}
+        onNavigate={navigateTo}
       />
 
-      {/* Stats Counter Section */}
-      <Stats stats={STATS} />
+      {currentPath === '/admission' ? (
+        <Admission onBackToHome={() => navigateTo('/')} />
+      ) : (
+        <>
+          {/* Hero Visual Area with Animated Gradients */}
+          <Hero 
+            onExploreClick={() => handleNavClick('courses')} 
+            onContactClick={() => handleNavClick('contact')} 
+          />
 
-      {/* Interactive Course Curriculum cards */}
-      <Courses courses={COURSES} onEnrollClick={handleEnrollBtnClick} />
+          {/* Stats Counter Section */}
+          <Stats stats={STATS} />
 
-      {/* Our Founder Profile Section */}
-      <Founder />
+          {/* Interactive Course Curriculum cards */}
+          <Courses courses={COURSES} onEnrollClick={handleEnrollBtnClick} />
 
-      {/* Bento Standard Benefits & Labs */}
-      <WhyChooseUs features={FEATURES} />
+          {/* Our Founder Profile Section */}
+          <Founder />
 
-      {/* Student Stories Testimonial Slider */}
-      <Testimonials testimonials={TESTIMONIALS} />
+          {/* Bento Standard Benefits & Labs */}
+          <WhyChooseUs features={FEATURES} />
 
-      {/* Masonry Filterable Gallery */}
-      <Gallery items={GALLERY} />
+          {/* Student Stories Testimonial Slider */}
+          <Testimonials testimonials={TESTIMONIALS} />
 
-      {/* Contact Form and Localized coordinates */}
-      <Contact courses={COURSES} />
+          {/* Masonry Filterable Gallery */}
+          <Gallery items={GALLERY} />
+
+          {/* Contact Form and Localized coordinates */}
+          <Contact courses={COURSES} />
+        </>
+      )}
 
       {/* Modular Multi column Footer */}
       <Footer onNavClick={handleNavClick} onEnrollClick={handleEnrollBtnClick} />

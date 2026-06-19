@@ -4,15 +4,23 @@ import { GraduationCap, Menu, X, ArrowRight } from './Icons';
 
 interface NavbarProps {
   onEnrollClick: (courseId?: string) => void;
+  currentPath: string;
+  onNavigate: (path: string) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onEnrollClick }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onEnrollClick, currentPath, onNavigate }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
+    if (currentPath === '/admission') {
+      setActiveSection('admission');
+      return;
+    }
+
     const handleScroll = () => {
+      if (window.location.pathname !== '/') return;
       setScrolled(window.scrollY > 20);
 
       // Track active section on scroll
@@ -34,7 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onEnrollClick }) => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [currentPath]);
 
   const menuItems = [
     { id: 'home', label: 'Home' },
@@ -42,11 +50,33 @@ export const Navbar: React.FC<NavbarProps> = ({ onEnrollClick }) => {
     { id: 'why-us', label: 'Why Us' },
     { id: 'testimonials', label: 'Reviews' },
     { id: 'gallery', label: 'Gallery' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'contact', label: 'Contact' },
+    { id: 'admission', label: '🎓 ADMISSION FORM' }
   ];
 
   const handleNavClick = (id: string) => {
     setMobileMenuOpen(false);
+    if (id === 'admission') {
+      onNavigate('/admission');
+      return;
+    }
+
+    if (currentPath !== '/') {
+      onNavigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          const offset = 80;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+      }, 150);
+      return;
+    }
+
     const element = document.getElementById(id);
     if (element) {
       const offset = 80; // height of navbar
