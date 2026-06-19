@@ -102,12 +102,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavClick, onEnrollClick }) => 
               <li className="flex items-start gap-2.5">
                 <MapPin size={15} className="text-blue-500 shrink-0 mt-0.5" />
                 <a 
-                  href="https://www.google.com/maps/search/?api=1&query=Nandina+College+Gate+Nandina+Jamalpur+Sadar+Jamalpur"
+                  href="https://www.google.com/maps/search/?api=1&query=Nandina+Sheikh+Anwar+Hossain+College+Gate+Nandina+Jamalpur+Sadar+Jamalpur+Bangladesh"
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-blue-400 transition-colors"
                 >
-                  Nandina College Gate, Nandina, Jamalpur Sadar, Jamalpur
+                  Nandina Sheikh Anwar Hossain College Gate, Nandina, Jamalpur Sadar, Jamalpur, Bangladesh
                 </a>
               </li>
               <li className="flex items-center gap-2.5 font-mono">

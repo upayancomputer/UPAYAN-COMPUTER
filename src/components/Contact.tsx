@@ -83,7 +83,7 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
             <div className="space-y-4">
               <h3 className="text-xl font-bold font-display text-white">Campus Location desk</h3>
               <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-sans">
-                Located at Nandina College Gate (in Jamalpur), the UPAYAN Head Offices are highly accessible by public transport and provide an incredibly peaceful atmosphere for tech learning.
+                Located at Nandina Sheikh Anwar Hossain College Gate, Nandina, Jamalpur Sadar, Jamalpur, Bangladesh, the UPAYAN Head Offices are highly accessible by public transport and provide an incredibly peaceful atmosphere for tech learning.
               </p>
             </div>
 
@@ -91,7 +91,7 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
             <div className="space-y-5" id="contact-details-box">
               {/* Address */}
               <a 
-                href="https://www.google.com/maps/search/?api=1&query=Nandina+College+Gate+Nandina+Jamalpur+Sadar+Jamalpur"
+                href="https://www.google.com/maps/search/?api=1&query=Nandina+Sheikh+Anwar+Hossain+College+Gate+Nandina+Jamalpur+Sadar+Jamalpur+Bangladesh"
                 target="_blank"
                 rel="noreferrer"
                 className="flex gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all shadow-md group block"
@@ -102,7 +102,7 @@ export const Contact: React.FC<ContactProps> = ({ courses }) => {
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider font-mono text-slate-400">Head Office Address</h4>
                   <p className="text-xs sm:text-sm text-slate-200 group-hover:text-white mt-1 leading-relaxed">
-                    Nandina College Gate, Nandina, Jamalpur Sadar, Jamalpur, Bangladesh
+                    Nandina Sheikh Anwar Hossain College Gate, Nandina, Jamalpur Sadar, Jamalpur, Bangladesh
                     <span className="text-[10px] font-mono tracking-wider font-bold text-blue-400 inline-flex items-center gap-1 ml-2 bg-blue-500/10 px-1.5 py-0.5 rounded">
                       <span>MAPS</span>
                       <svg className="w-2.5 h-2.5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
