@@ -98,6 +98,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({ testimonials }) => {
                     referrerPolicy="no-referrer"
                     src={active.avatarUrl}
                     alt={active.name}
+                    loading="lazy"
                     className="h-12 w-12 rounded-full object-cover border-2 border-blue-500/20"
                   />
                   <div>

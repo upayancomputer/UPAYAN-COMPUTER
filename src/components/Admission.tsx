@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { jsPDF } from 'jspdf';
 import { 
   GraduationCap, 
   ArrowRight, 
@@ -262,7 +261,8 @@ export const Admission: React.FC<AdmissionProps> = ({ onBackToHome }) => {
   };
 
   // Safe programmatic PDF Builder using jsPDF package
-  const generatePDF = () => {
+  const generatePDF = async () => {
+    const { jsPDF } = await import('jspdf');
     const doc = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
@@ -743,7 +743,7 @@ export const Admission: React.FC<AdmissionProps> = ({ onBackToHome }) => {
               </div>
               <div className="w-[100px] h-[120px] bg-white border border-slate-400 flex items-center justify-center shrink-0">
                 {studentPhoto ? (
-                  <img src={studentPhoto} alt="Student" className="w-full h-full object-cover" />
+                  <img src={studentPhoto} alt="Student" loading="lazy" className="w-full h-full object-cover" />
                 ) : (
                   <span className="text-[8px] text-slate-400 text-center font-bold px-1 uppercase">Passport Size Photo Here</span>
                 )}
@@ -1636,7 +1636,7 @@ export const Admission: React.FC<AdmissionProps> = ({ onBackToHome }) => {
 
                     {studentPhoto ? (
                       <div className="relative h-20 w-20 mx-auto rounded-lg overflow-hidden border border-white/10 shadow-md">
-                        <img src={studentPhoto} alt="Upload" className="w-full h-full object-cover" />
+                        <img src={studentPhoto} alt="Upload" loading="lazy" className="w-full h-full object-cover" />
                         <button
                           type="button"
                           onClick={() => { setStudentPhoto(null); setStudentPhotoName(''); setDocs(prev => ({ ...prev, photo: false })); }}

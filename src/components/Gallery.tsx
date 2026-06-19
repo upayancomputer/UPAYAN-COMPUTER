@@ -80,6 +80,7 @@ export const Gallery: React.FC<GalleryProps> = ({ items }) => {
                   referrerPolicy="no-referrer"
                   src={item.imageUrl}
                   alt={item.title}
+                  loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
                 

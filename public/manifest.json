@@ -1,0 +1,22 @@
+{
+  "name": "UPAYAN COMPUTER TRAINING CENTER",
+  "short_name": "UPAYAN",
+  "description": "UPAYAN COMPUTER TRAINING CENTER provides Computer Office Application, Advanced Computer Technology, ICT Diploma and HSC ICT programs in Jamalpur, Bangladesh.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#00D4FF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

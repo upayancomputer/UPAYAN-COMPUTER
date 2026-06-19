@@ -3,14 +3,16 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Courses } from './components/Courses';
 import { WhyChooseUs } from './components/WhyChooseUs';
-import { Founder } from './components/Founder';
 import { Stats } from './components/Stats';
 import { Testimonials } from './components/Testimonials';
 import { Gallery } from './components/Gallery';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { EnrollModal } from './components/EnrollModal';
-import { Admission } from './components/Admission';
+
+// Performance Optimization: Code Splitting & Dynamic Imports
+const Admission = React.lazy(() => import('./components/Admission').then(module => ({ default: module.Admission })));
+const Founder = React.lazy(() => import('./components/Founder').then(module => ({ default: module.Founder })));
 
 import { COURSES, FEATURES, STATS, TESTIMONIALS, GALLERY } from './data';
 
@@ -93,38 +95,48 @@ export default function App() {
         onNavigate={navigateTo}
       />
 
-      {currentPath === '/admission' ? (
-        <Admission onBackToHome={() => navigateTo('/')} />
-      ) : (
-        <>
-          {/* Hero Visual Area with Animated Gradients */}
-          <Hero 
-            onExploreClick={() => handleNavClick('courses')} 
-            onContactClick={() => handleNavClick('contact')} 
-          />
+      <React.Suspense fallback={
+        <div className="min-h-[40vh] flex flex-col items-center justify-center text-slate-300 space-y-4">
+          <div className="relative w-12 h-12">
+            <div className="absolute inset-0 rounded-full border-2 border-cyan-500/10" />
+            <div className="absolute inset-0 rounded-full border-2 border-t-cyan-400 animate-spin" />
+          </div>
+          <div className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase">SYS CONSOLE LOADING...</div>
+        </div>
+      }>
+        {currentPath === '/admission' ? (
+          <Admission onBackToHome={() => navigateTo('/')} />
+        ) : (
+          <>
+            {/* Hero Visual Area with Animated Gradients */}
+            <Hero 
+              onExploreClick={() => handleNavClick('courses')} 
+              onContactClick={() => handleNavClick('contact')} 
+            />
 
-          {/* Stats Counter Section */}
-          <Stats stats={STATS} />
+            {/* Stats Counter Section */}
+            <Stats stats={STATS} />
 
-          {/* Interactive Course Curriculum cards */}
-          <Courses courses={COURSES} onEnrollClick={handleEnrollBtnClick} />
+            {/* Interactive Course Curriculum cards */}
+            <Courses courses={COURSES} onEnrollClick={handleEnrollBtnClick} />
 
-          {/* Our Founder Profile Section */}
-          <Founder />
+            {/* Our Founder Profile Section */}
+            <Founder />
 
-          {/* Bento Standard Benefits & Labs */}
-          <WhyChooseUs features={FEATURES} />
+            {/* Bento Standard Benefits & Labs */}
+            <WhyChooseUs features={FEATURES} />
 
-          {/* Student Stories Testimonial Slider */}
-          <Testimonials testimonials={TESTIMONIALS} />
+            {/* Student Stories Testimonial Slider */}
+            <Testimonials testimonials={TESTIMONIALS} />
 
-          {/* Masonry Filterable Gallery */}
-          <Gallery items={GALLERY} />
+            {/* Masonry Filterable Gallery */}
+            <Gallery items={GALLERY} />
 
-          {/* Contact Form and Localized coordinates */}
-          <Contact courses={COURSES} />
-        </>
-      )}
+            {/* Contact Form and Localized coordinates */}
+            <Contact courses={COURSES} />
+          </>
+        )}
+      </React.Suspense>
 
       {/* Modular Multi column Footer */}
       <Footer onNavClick={handleNavClick} onEnrollClick={handleEnrollBtnClick} />

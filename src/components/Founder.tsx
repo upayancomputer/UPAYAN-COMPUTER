@@ -62,6 +62,7 @@ export const Founder: React.FC = () => {
                   <img
                     src={founderPhoto}
                     alt="MD. YUNUS MAHMUD"
+                    loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     referrerPolicy="no-referrer"
                   />
@@ -146,6 +147,7 @@ export const Founder: React.FC = () => {
                       <img
                         src={founderPhoto}
                         alt="MD. YUNUS MAHMUD"
+                        loading="lazy"
                         className="h-full w-full object-cover"
                         referrerPolicy="no-referrer"
                       />

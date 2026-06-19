@@ -213,6 +213,7 @@ export const CourseDeckCarousel: React.FC = () => {
                   <img 
                     src={course.image} 
                     alt={course.title} 
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     referrerPolicy="no-referrer"
                   />
