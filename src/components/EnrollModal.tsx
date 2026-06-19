@@ -20,6 +20,8 @@ export const EnrollModal: React.FC<EnrollModalProps> = ({
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [dob, setDob] = useState('');
+  const [studyStatus, setStudyStatus] = useState('');
   const [shift, setShift] = useState('morning');
   const [notes, setNotes] = useState('');
   
@@ -31,9 +33,21 @@ export const EnrollModal: React.FC<EnrollModalProps> = ({
     }
   }, [selectedCourseId]);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !phone) return;
+    if (!name || !phone || !dob || !studyStatus) return;
 
     setStatus('submitting');
     
@@ -50,6 +64,8 @@ export const EnrollModal: React.FC<EnrollModalProps> = ({
           'Student Name': name,
           'Mobile Number': `+880 ${phone}`,
           'Email': email || 'Not Provided',
+          'Date of Birth': dob,
+          'Current Study Status': studyStatus,
           'Selected Course': activeCourse?.title || 'Unknown Course',
           'Course Fee': activeCourse?.price || 'Not Specified',
           'Preferred Batch': shift,
@@ -164,6 +180,45 @@ export const EnrollModal: React.FC<EnrollModalProps> = ({
                         className="w-full h-11 px-4 rounded-xl glass-input placeholder-slate-500 text-sm focus:ring-1 focus:ring-blue-500"
                         id="enroll-email"
                       />
+                    </div>
+
+                    {/* Date of Birth */}
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium text-slate-300">Date of Birth <span className="text-rose-500">*</span></label>
+                      <input
+                        type="date"
+                        required
+                        value={dob}
+                        onChange={(e) => setDob(e.target.value)}
+                        className="w-full h-11 px-4 rounded-xl glass-input text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 [color-scheme:dark]"
+                        id="enroll-dob"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {/* Current Study Status */}
+                    <div className="space-y-1.5 font-sans">
+                      <label className="text-sm font-medium text-slate-300">Current Study Status <span className="text-rose-500">*</span></label>
+                      <select
+                        required
+                        value={studyStatus}
+                        onChange={(e) => setStudyStatus(e.target.value)}
+                        className="w-full h-11 px-4 rounded-xl bg-slate-900 border border-white/10 text-slate-100 text-sm focus:border-blue-500 focus:outline-none cursor-pointer"
+                        id="enroll-study-status"
+                      >
+                        <option value="" className="bg-slate-950">-- Select Study Status --</option>
+                        <option value="Class 8" className="bg-slate-950">Class 8</option>
+                        <option value="Class 9" className="bg-slate-950">Class 9</option>
+                        <option value="SSC Candidate" className="bg-slate-950">SSC Candidate</option>
+                        <option value="HSC 1st Year" className="bg-slate-950">HSC 1st Year</option>
+                        <option value="HSC 2nd Year" className="bg-slate-950">HSC 2nd Year</option>
+                        <option value="HSC Candidate" className="bg-slate-950">HSC Candidate</option>
+                        <option value="Diploma Student" className="bg-slate-950">Diploma Student</option>
+                        <option value="University Student" className="bg-slate-950">University Student</option>
+                        <option value="Job Seeker" className="bg-slate-950">Job Seeker</option>
+                        <option value="Others" className="bg-slate-950">Others</option>
+                      </select>
                     </div>
 
                     {/* Course Selection */}
