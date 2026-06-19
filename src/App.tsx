@@ -14,7 +14,7 @@ import { EnrollModal } from './components/EnrollModal';
 const Admission = React.lazy(() => import('./components/Admission').then(module => ({ default: module.Admission })));
 const Founder = React.lazy(() => import('./components/Founder').then(module => ({ default: module.Founder })));
 
-import { COURSES, FEATURES, STATS, TESTIMONIALS, GALLERY } from './data';
+import { COURSES, FEATURES, STATS, TESTIMONIALS } from './data';
 
 export default function App() {
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
@@ -130,7 +130,7 @@ export default function App() {
             <Testimonials testimonials={TESTIMONIALS} />
 
             {/* Masonry Filterable Gallery */}
-            <Gallery items={GALLERY} />
+            <Gallery />
 
             {/* Contact Form and Localized coordinates */}
             <Contact courses={COURSES} />

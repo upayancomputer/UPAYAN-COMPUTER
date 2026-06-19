@@ -297,47 +297,5 @@ export const TESTIMONIALS: Testimonial[] = [
   }
 ];
 
-export const GALLERY: GalleryItem[] = [
-  {
-    id: 'g1',
-    title: 'Modern High-Speed Practical Lab Stations',
-    category: 'lab',
-    imageUrl: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=600',
-    aspectRatio: 'wide'
-  },
-  {
-    id: 'g2',
-    title: 'Hands-on Coding & Hardware Demo Classroom',
-    category: 'classroom',
-    imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=600',
-    aspectRatio: 'portrait'
-  },
-  {
-    id: 'g3',
-    title: 'Annual Course Graduation & Certificate Ceremony',
-    category: 'events',
-    imageUrl: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=600',
-    aspectRatio: 'video'
-  },
-  {
-    id: 'g4',
-    title: 'Our Clean, Air-Conditioned High-Tech Study Spaces',
-    category: 'lab',
-    imageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=600',
-    aspectRatio: 'square'
-  },
-  {
-    id: 'g5',
-    title: 'Special ICT Seminar of UPAYAN Alumnus and Mentors',
-    category: 'events',
-    imageUrl: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=600',
-    aspectRatio: 'wide'
-  },
-  {
-    id: 'g6',
-    title: 'Official Course Accreditation & Govt. Syllabus Integration',
-    category: 'certificates',
-    imageUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=600',
-    aspectRatio: 'video'
-  }
-];
+// Static GALLERY array has been removed in favor of dynamic JSON loading.
+
