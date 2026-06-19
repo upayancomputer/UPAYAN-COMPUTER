@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavClick, onEnrollClick }) => 
                   UPAYAN
                 </h1>
                 <p className="text-[9px] font-medium tracking-widest font-mono text-blue-400 mt-1 uppercase">
-                  Computer Academy
+                  Computer Training Center
                 </p>
               </div>
             </button>

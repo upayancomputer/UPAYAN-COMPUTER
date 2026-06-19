@@ -92,7 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onEnrollClick }) => {
                   UPAYAN
                 </h1>
                 <p className="text-[8.5px] font-bold tracking-widest font-mono text-cyan-400 mt-0.5 uppercase">
-                  Computer Academy
+                  Computer Training Center
                 </p>
               </div>
             </button>

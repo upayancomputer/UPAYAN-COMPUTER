@@ -222,7 +222,7 @@ export const FEATURES: Feature[] = [
 export const STATS: Statistic[] = [
   {
     id: 'students',
-    value: 1200,
+    value: 700,
     suffix: '+',
     label: 'Students Trained',
     iconName: 'HeartHandshake',
@@ -238,7 +238,7 @@ export const STATS: Statistic[] = [
   },
   {
     id: 'years',
-    value: 10,
+    value: 4,
     suffix: '+',
     label: 'Years Experience',
     iconName: 'Sparkles',
